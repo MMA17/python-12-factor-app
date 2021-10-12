@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,8 +38,8 @@ metadata:
     app: flask
 spec:
   ports:
-  - port: 5000
-    targetPort: 80
+  - port: 80
+    targetPort: 5000
     name: flask
   selector:
     app: flask
