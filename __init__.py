@@ -3,7 +3,7 @@ from flask.helpers import make_response
 from werkzeug.utils import secure_filename
 from flask import Flask,flash,request,redirect,send_file,render_template,session,Response
 import pymysql.cursors
-# from connector import con
+from connector import con
 
 UPLOAD_FOLDER = 'uploads/'
 #app = Flask(__name__)
@@ -30,6 +30,16 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             print("saved file successfully")
+            try:
+                with con:
+                    with con.cursor() as cursor:
+                    # Create a new record
+                        sql = "INSERT INTO files (filename, size) VALUES ('" + filename +"','" + str(os.path.getsize('./uploads/'+ filename)) +"')"
+                        cursor.execute(sql)
+                        con.commit()
+            except print(0):
+                pass
+            
       #send file name as parameter to downlad
             return redirect('/downloadfile/'+ filename)
     return render_template('upload_file.html')

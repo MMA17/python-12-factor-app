@@ -18,8 +18,7 @@ spec:
     spec:
       containers:
       - name: appdeploy
-        image: flaskapp
-        imagePullPolicy: Never
+        image: cr-hn-1.bizflycloud.vn/f8a5a016b2274fd1a2b405e447e665fe/flaskapp:latest
         ports:
         - containerPort: 5000 
         resources:
@@ -39,9 +38,8 @@ metadata:
 spec:
   ports:
   - port: 5000
-    targetPort: 5000
-    nodePort: 31000
+    targetPort: 80
     name: flask
   selector:
     app: flask
-  type: NodePort
+  type: LoadBalancer
