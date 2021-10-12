@@ -43,7 +43,7 @@ spec:
     targetPort: 3306
   selector:
     app: mysql
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
