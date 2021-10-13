@@ -1,9 +1,9 @@
 import pymysql.cursors
-
+import os
 con = pymysql.connect(
-            host = '103.56.156.1999',
-            user = 'root',
-            password = '123456',
-            database = 'updownloadfile',
+            host = os.getenv('MYSQL_HOST'),
+            user = os.getenv('MYSQL_USER'),
+            password = os.getenv('MYSQL_PASS'),
+            database = os.getenv('MYSQL_DATABASE'),
             cursorclass = pymysql.cursors.DictCursor
             )
