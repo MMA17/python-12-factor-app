@@ -31,7 +31,7 @@ spec:
             cpu: "500m"
         volumeMounts:
           - name: mysql
-            mountPath: /app
+            mountPath: /root/app
       volumes:
         - name: mysql
           ConfigMap:
@@ -39,4 +39,19 @@ spec:
             items:
               - key: mysql_info
                 path: connector.py
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appdeploy
+  labels:
+    app: flask
+spec:
+  ports:
+  - port: 80
+    targetPort: 5000
+    name: flask
+  selector:
+    app: flask
+  type: LoadBalancer
 
