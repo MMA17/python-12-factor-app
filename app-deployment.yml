@@ -29,25 +29,27 @@ spec:
             memory: "128Mi"
             cpu: "500m"
         env:
-          - name: MYSQL_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: mysql-info
-                key: MYSQL_HOST
-          - name: MYSQL_USER
-            valueFrom:
-              configMapKeyRef:
-                name: mysql-info
-                key: MYSQL_USER
-          - name: MYSQL_PASS
-            valueFrom:
-              configMapKeyRef:
-                name: mysql-info
-                key: MYSQL_PASS
-          - name: MYSQL_DATABASE
-            valueFrom:
-              configMapKeyRef:
-                name: mysql-info
-                key: MYSQL_DATABASE
+          - configMapKeyRef:
+            name: mysql-info
+          # - name: MYSQL_HOST
+          #   valueFrom:
+          #     configMapKeyRef:
+          #       name: mysql-info
+          #       key: MYSQL_HOST
+          # - name: MYSQL_USER
+          #   valueFrom:
+          #     configMapKeyRef:
+          #       name: mysql-info
+          #       key: MYSQL_USER
+          # - name: MYSQL_PASS
+          #   valueFrom:
+          #     configMapKeyRef:
+          #       name: mysql-info
+          #       key: MYSQL_PASS
+          # - name: MYSQL_DATABASE
+          #   valueFrom:
+          #     configMapKeyRef:
+          #       name: mysql-info
+          #       key: MYSQL_DATABASE
 
 
