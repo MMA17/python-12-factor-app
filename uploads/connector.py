@@ -1,7 +1,7 @@
 import pymysql.cursors
 
 con = pymysql.connect(
-            host = '103.56.156.199',
+            host = '123.31.39.162',
             user = 'root',
             password = '123456',
             database = 'updownloadfile',
