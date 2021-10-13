@@ -29,3 +29,14 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "500m"
+        volumeMounts:
+          - name: mysql
+            mountPath: /app
+      volumes:
+        - name: mysql
+          ConfigMap:
+            name: mysql-info
+            items:
+              - key: mysql_info
+                path: connector.py
+
