@@ -1,6 +1,5 @@
 FROM mysql
 
 ENV MYSQL_DATABASE updownloadfile
-ENV MYSQL_ROOT_PASSWORD=
 
 COPY ./sql-scripts/ /docker-entrypoint-initdb.d/
