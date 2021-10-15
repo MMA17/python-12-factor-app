@@ -9,11 +9,11 @@ spec:
   - port: 80
     targetPort: 5000
     name: flask
-  selector:
-    app: flask
+    
   - port: 9182
     targetPort: 8000
     name: metrics
+
   selector:
     app: flask
   type: LoadBalancer
