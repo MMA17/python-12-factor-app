@@ -2,6 +2,4 @@
 
 python3 ./httpserver.py &
 
-python3 ./__init__.py &
-
-exit $?
+python3 ./__init__.py

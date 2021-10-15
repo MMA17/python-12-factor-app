@@ -20,7 +20,7 @@ spec:
       - name: appdeploy
         image: cr-hn-1.bizflycloud.vn/f8a5a016b2274fd1a2b405e447e665fe/flaskapp:latest
         ports:
-        - containerPort: 5000 
+        - containerPort: 5000
         resources:
           requests:
             memory: "64Mi"
