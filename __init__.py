@@ -1,17 +1,26 @@
 import os
 from flask.helpers import make_response
+from prometheus_client import metrics
 from werkzeug.utils import secure_filename
 from flask import Flask,flash,request,redirect,send_file,render_template,session,Response
+from prometheus_flask_exporter import PrometheusMetrics
 import pymysql.cursors
-from connector import con
+# from connector import con
 
 UPLOAD_FOLDER = 'uploads/'
 #app = Flask(__name__)
 app = Flask(__name__, template_folder='templates')
+metrics = PrometheusMetrics(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+by_path_counter = metrics.counter(
+    'by_path_counter', 'Request count by request paths',
+    labels={'path': lambda: request.path}
+)
 
 # Upload API
 @app.route('/uploadfile', methods=['GET', 'POST'])
+@by_path_counter
 def upload_file():
     # print ("User_id: " + request.cookies.get('user_id')) 
     if request.method == 'POST':
@@ -46,16 +55,19 @@ def upload_file():
 
 # Download API
 @app.route("/downloadfile/<filename>", methods = ['GET'])
+@by_path_counter
 def download_file(filename):
     return render_template('download.html',value=filename)
 
 @app.route('/return-files/<filename>')
+@by_path_counter
 def return_files_tut(filename):
     file_path = UPLOAD_FOLDER + filename
     return send_file(file_path, as_attachment=True, attachment_filename=filename)
 
 user_ID = ''
 @app.route('/login', methods=['GET', 'POST'])
+@by_path_counter
 def login():
     if request.method == 'POST':
         if 'username' == '' or 'pass' == '':
@@ -78,12 +90,14 @@ def login():
     return render_template('login.html')
 
 @app.route('/setcookie', methods=['GET', 'POST'])
+@by_path_counter
 def setcookie():
     resp = make_response(redirect('/uploadfile'))
     resp.set_cookie('user_id', user_ID)
     return resp
 
 @app.route('/', methods=['GET', 'POST'])
+@by_path_counter
 def index():
     return redirect('/uploadfile')
     
