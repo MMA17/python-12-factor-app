@@ -11,12 +11,15 @@ from connector import con
 UPLOAD_FOLDER = 'uploads/'
 #app = Flask(__name__)
 app = Flask(__name__, template_folder='templates')
-metrics = PrometheusMetrics(app, default_labels=None)
+hostname = thisdict = {
+  "host": socket.gethostname()
+}
+metrics = PrometheusMetrics(app, default_labels=hostname)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 by_path_counter = metrics.counter(
     'by_path_counter', 'Request count by request paths',
-    labels={'path': lambda: request.path, 'hostname':socket.gethostname()}
+    labels={'path': lambda: request.path}
 )
 
 # Upload API
