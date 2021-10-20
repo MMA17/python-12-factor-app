@@ -5,17 +5,18 @@ from werkzeug.utils import secure_filename
 from flask import Flask,flash,request,redirect,send_file,render_template,session,Response
 from prometheus_flask_exporter import PrometheusMetrics
 import pymysql.cursors
-# from connector import con
+import socket
 
+from connector import con
 UPLOAD_FOLDER = 'uploads/'
 #app = Flask(__name__)
 app = Flask(__name__, template_folder='templates')
-metrics = PrometheusMetrics(app)
+metrics = PrometheusMetrics(app, default_labels=None)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 by_path_counter = metrics.counter(
     'by_path_counter', 'Request count by request paths',
-    labels={'path': lambda: request.path}
+    labels={'path': lambda: request.path, 'hostname':socket.gethostname()}
 )
 
 # Upload API
