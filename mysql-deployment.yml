@@ -81,4 +81,3 @@ spec:
         persistentVolumeClaim:
           claimName: mysql-pv-claim
       - name: mysql-config
-        

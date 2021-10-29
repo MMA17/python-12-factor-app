@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: prometheus-scale
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: appdeploy
+  minReplicaCount: 1
+  maxReplicaCount: 10
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://103.56.156.199:9090/
+      metricName: total_http_request
+      threshold: '100'
+      query: sum(irate(flask_http_request_duration_seconds_count{}[60s]))

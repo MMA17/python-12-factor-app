@@ -4,13 +4,6 @@ from prometheus_client import start_http_server, Summary, Gauge
 import time
 import psutil
 
-# REQUEST_TIME = Summary('request_processing_seconds', 'Time spent processing request')
-# # Decorate function with metric.
-# @REQUEST_TIME.time()
-# def process_request(t):
-#     """A dummy function that takes some time."""
-#     time.sleep(t)
-
 cpu_usage = Gauge('cpu_usage', 'Number of precent cpu using', labelnames=['cputype'])
 def get_cpu_percent():
     cpu_usage.labels(cputype='intel').set(psutil.cpu_percent())
@@ -50,7 +43,7 @@ if __name__ == '__main__':
             bandwidth.labels('outbound').set("%0.3f" % convert_to_kbit(bw_outboud_new_value - bw_outbound_old_value))
         bw_outbound_old_value = bw_outboud_new_value
 
-        bw_inboud_new_value = psutil.net_io_counters().bytes_recv 
+        bw_inboud_new_value = psutil.net_io_counters().bytes_recv
         if bw_inbound_old_value:
             bandwidth.labels('inbound').set("%0.3f" % convert_to_kbit(bw_inboud_new_value - bw_inbound_old_value))
         bw_inbound_old_value = bw_inboud_new_value

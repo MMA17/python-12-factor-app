@@ -7,14 +7,16 @@ from prometheus_flask_exporter import PrometheusMetrics
 import pymysql.cursors
 import socket
 
-from connector import con
+#from connector import con
 UPLOAD_FOLDER = 'uploads/'
 #app = Flask(__name__)
 app = Flask(__name__, template_folder='templates')
-hostname = thisdict = {
+
+hostname = {
   "host": socket.gethostname()
 }
-metrics = PrometheusMetrics(app, default_labels=hostname)
+
+metrics = PrometheusMetrics(app, default_labels=hostname, defaults_prefix='k8s_flask_upload')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 by_path_counter = metrics.counter(
